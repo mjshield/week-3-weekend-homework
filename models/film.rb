@@ -18,4 +18,28 @@ class Film
     @id = film['id'].to_i
   end
 
+  def customers
+    sql = "SELECT customers.* FROM customers
+      INNER JOIN tickets
+      ON tickets.customer_id = customers.id
+      WHERE film_id = #{@id}"
+    return Film.map_items(sql)
+  end
+
+  def self.all()
+    sql = "SELECT * FROM films"
+    return self.map_items(sql)
+  end
+
+  def self.delete_all()
+    sql = "DELETE FROM films"
+    SqlRunner.run(sql)
+  end
+
+  def self.map_items(sql)
+    films = SqlRunner.run(sql)
+    result = films.map { |film| Film.new(film) }
+    return result
+  end
+
 end
