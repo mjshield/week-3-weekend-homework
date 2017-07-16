@@ -26,6 +26,14 @@ class Customer
     return Film.map_items(sql)
   end
 
+  def tickets()
+    sql = "SELECT * FROM tickets
+      WHERE customer_id = #{@id}"
+    tickets = Film.map_items(sql).length
+    return tickets
+  end
+  #"There's a better way to return the number, via the SQL"
+
   def self.all()
     sql = "SELECT * FROM customers"
     return self.map_items(sql)
